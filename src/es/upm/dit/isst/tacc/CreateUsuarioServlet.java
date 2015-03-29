@@ -17,16 +17,25 @@ public class CreateUsuarioServlet extends HttpServlet {
 		
 	System.out.println("Creando nuevo usuario");
 	
+	int userId = 2;
+	
 	String nombre = "Juan Carlos";
 	String primApellido = "Yelmo";
 	String segApellido = "Garcia";
 	TaccDAO dao = TaccDAOImpl.getInstance();
-	dao.add(nombre, primApellido, segApellido, segApellido, segApellido, segApellido,
+	dao.addUsuario(userId, nombre, primApellido, segApellido, segApellido, segApellido, segApellido,
 			segApellido, segApellido, segApellido, segApellido, segApellido, segApellido,
 			segApellido, segApellido, segApellido, segApellido, segApellido, segApellido,
 			segApellido, segApellido, segApellido, segApellido);
+	dao.addUsuario(1, nombre, primApellido, segApellido, segApellido, segApellido, segApellido,
+			segApellido, segApellido, segApellido, segApellido, segApellido, segApellido,
+			segApellido, segApellido, segApellido, segApellido, segApellido, segApellido,
+			segApellido, segApellido, segApellido, segApellido);
+	
+	
+	dao.addEvento(userId, primApellido, userId, userId, userId, userId, false, userId, userId, false, false, false, userId, userId, userId);
+	
 	resp.sendRedirect("/usuarios");
-
 	}
 
 }
