@@ -159,7 +159,7 @@
                      alt="User Pic">
             </div>
             <div class="span10">
-                <strong>Usuario <c:out value="${usuario.id}" /></strong><br>
+                <strong>Usuario <c:out value="${usuario.userId}" /></strong><br>
                 <span class="text-muted">Yelmo García, Juan Carlos</span>
             </div>
             <div class="span1 dropdown-user" data-for=".<c:out value="${usuario.id}" />">
@@ -170,12 +170,15 @@
             <div class="span10 offset1">
                 <div class="panel panel-primary">
 
-                   
+                   <!--
+                     <form action="/historial?userId=${usuario.userId}" method="post" accept-charset="utf-8">
 
-                     <span class="pull-right">
-                            <button color="green"> Historial de eventos </button>
-                          
-                        </span>
+			    		<button color="green"> Historial de eventos </button>
+					</form>-->
+					
+					<a href="/historial?userId=${usuario.userId}">
+					<button color="green"> Historial de eventos </button>
+					</a>
                  <br>
                   <br>
                     <div class="panel-heading">

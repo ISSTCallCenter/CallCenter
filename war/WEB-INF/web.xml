@@ -21,12 +21,28 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/inicio</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>AlertaLlega</servlet-name>
+		<servlet-class>es.upm.dit.isst.tacc.InicioServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AlertaLlega</servlet-name>
+		<url-pattern>/alertallega</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>Usuarios</servlet-name>
 		<servlet-class>es.upm.dit.isst.tacc.UsuariosServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Usuarios</servlet-name>
 		<url-pattern>/usuarios</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>Historial</servlet-name>
+		<servlet-class>es.upm.dit.isst.tacc.HistorialServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Historial</servlet-name>
+		<url-pattern>/historial</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>CreateUsuario</servlet-name>
