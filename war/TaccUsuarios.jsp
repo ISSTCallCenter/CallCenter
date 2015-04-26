@@ -9,6 +9,7 @@
 <html>
 <head>
 		    <meta charset="utf-8">
+		        <link rel="stylesheet" type="text/css" href="hoja-estilo.css" media="screen" />
     <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
     <title>TACC - USUARIOS</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,6 +34,12 @@
     border-color: #428BCA;
     color: #FFFFFF;
 }   
+
+.container {
+width: 100%;
+margin-left: 40px;
+margin-bottom: 20px;
+}
 
 .panel-heading {
     border-bottom: 1px solid rgba(0, 0, 0, 0);
@@ -97,16 +104,27 @@
 }
 
 .table-user-information > tbody > tr:first-child {
-    border-top: 0;
+    border-top: 1px;
 }
 
 
 .table-user-information > tbody > tr > td {
-    border-top: 0;
+    border-top: 1px;
 }
     </style>
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script>
+    setInterval(ajaxAutoload, 10000); //300000 MS == 5 minutes
+        
+   	
+   		
+		function ajaxAutoload() {
+    	//do your AJAX stuff here
+			$('#load_me').load('/alertallega #load_me').fadeIn("slow");
+    		
+		}
+	</script>
 		
 		<div class="container" style="padding-top: 1em;">
 	     <nav role="navigation" class="navbar navbar-default navbar-fixed-top ">
@@ -115,7 +133,7 @@
 	            <ul class="nav navbar-nav">
 	                <li><a href="/inicio">Inicio</a></li>
 	                <li class="active"><a href="/usuarios">Usuarios</a></li>
-	                <li><a href="index.html">Logout</a></li>
+	                <li><a href="<c:url value="${url}"/>">Logout</a></li>
 	                
 	            </ul>
 
@@ -125,6 +143,12 @@
 <body>
 
 <br><br>
+<div id="load_me" style="position:fixed;right:1%">
+				    
+				    <p style="text-align:center"> ALERTAS POR ATENDER: ${fn:length(alertas)}</p>
+				    <button class="btn btn-danger" onClick=actualizarAlarmas()>Actualizar alarmas</button> 
+				   
+</div>
 
 <form action="/nuevoUsuario" method="post" accept-charset="utf-8">
 
@@ -138,7 +162,7 @@
 
 		<td colspan="2"
 		align="right"><input type="submit"
-		value="Borrar Usuarios" /></td>
+		value="Borrar Usuarios, Alarmas, Chat y Eventos" /></td>
 		
 </form>
 <div style="clear: both;" />
@@ -155,19 +179,19 @@
         <div class="row-fluid user-row">
             <div class="span1">
                 <img class="img-circle"
-                     src="yelmo.jpg"
+                     src="user<c:out value="${usuario.userId}" />.jpg"
                      alt="User Pic">
             </div>
             <div class="span10">
                 <strong>Usuario <c:out value="${usuario.userId}" /></strong><br>
-                <span class="text-muted">Yelmo García, Juan Carlos</span>
+                <span class="text-muted"><c:out value="${usuario.primerApellido}" /> <c:out value="${usuario.segundoApellido}" />, <c:out value="${usuario.nombre}" /></span>
             </div>
-            <div class="span1 dropdown-user" data-for=".<c:out value="${usuario.id}" />">
+            <div class="span1" data-toggle="collapse" data-target="#accordion<c:out value="${usuario.id}" />">
                 <i class="icon-chevron-down text-muted"></i>
             </div>
         </div>
-        <div class="row-fluid user-infos <c:out value="${usuario.id}" />">
-            <div class="span10 offset1">
+        <div class="collapse"  id="accordion<c:out value="${usuario.id}" />">
+            <div class="span10 offset0">
                 <div class="panel panel-primary">
 
                    <!--
@@ -188,7 +212,7 @@
                         <div class="row-fluid">
                             <div class="span3">
                                 <img class="img-circle"
-                                     src="yelmo.jpg"
+                                     src="user<c:out value="${usuario.userId}" />.jpg"
                                      alt="User Pic">
                             </div>
                             <div class="span6">
@@ -196,55 +220,77 @@
                                 <table class="table table-condensed table-responsive table-user-information">
                                     <tbody>
                                     <tr>
+                                        <td><strong>Sexo</strong></td>
+                                        <td><c:out value="${usuario.sexo}" /></td>
+                                    </tr>
+                                    <tr>
                                         <td><strong>Fecha</strong></td>
-                                        <td>29/2/1984</td>
+                                        <td><c:out value="${usuario.fecha}" /></td>
                                     </tr>
     
                                     <tr>
                                         <td><strong>DNI</strong></td>
-                                        <td>12345678-A</td>
+                                        <td><c:out value="${usuario.DNI}" /></td>
                                     </tr>
 
                                       <tr>
                                         <td><strong>Teléfono</strong></td>
-                                        <td>123456789</td>
+                                        <td><c:out value="${usuario.telefono}" /></td>
                                     </tr>
                                     
                                     <tr>
                                         
                                         <td><strong>Vía</strong></td>
-                                        <td>Avenida complutense</td>
-
+                                        <td><c:out value="${usuario.via}" /></td>
+									</tr>
+									<tr>
+									
                                         <td><strong> Nº </strong></td>
-                                        <td>123</td>
-                                     </tr>
-                                      <tr>
+                                        <td><c:out value="${usuario.numeroEdificio}" /></td>
+                                    </tr>
+                                     <tr>
                                         <td><strong>Provincia</strong></td>
-                                        <td>Madrid</td>
-
+                                        <td><c:out value="${usuario.provincia}" /></td>
+									</tr>
+									<tr>
                                          <td><strong>Ciudad</strong></td>
-                                        <td>Madrid</td>
-
+                                        <td><c:out value="${usuario.ciudad}" /></td>
+                                     </tr>
+                                     <tr>
                                          <td><strong>CP</strong></td>
-                                        <td>28030</td>
+                                        <td><c:out value="${usuario.CP}" /></td>
                                     </tr>
                                     <tr>
                                         <td><strong>Estado Civil</strong></td>
-                                        <td>Casado</td>
+                                        <td><c:out value="${usuario.estadoCivil}" /></td>
                                     </tr>
                                   
                                     <tr>
                                         <td><strong>Persona de contacto1</strong></td>
-                                        <td>Apellido1 apellido, Nombre</td>
+                                        <td><c:out value="${usuario.personaContacto1}" /></td>
+                                    </tr>
+                                    <tr>
                                         <td><strong>Teléfono</strong></td>
-                                        <td>123456789</td>
+                                        <td><c:out value="${usuario.telefonoContacto1}" /></td>
+                                         <td>
+                                        <a href="/chat">
+										<button color="green"> Iniciar Chat </button>
+										</a> 
+										</td>
                                     </tr>
 
                                      <tr>
                                         <td><strong>Persona de contacto2</strong></td>
-                                        <td>Apellido1 apellido, Nombre</td>
+                                        <td><c:out value="${usuario.personaContacto2}" /></td>
+                                     </tr>
+                                     <tr>
                                         <td><strong>Teléfono</strong></td>
-                                        <td>123456789</td>
+                                        <td><c:out value="${usuario.telefonoContacto2}" /></td>
+                                        <td>
+                                        <a href="/chat">
+										<button color="green"> Iniciar Chat </button>
+										</a> 
+										</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -254,10 +300,8 @@
                     
                 </div>
             </div>
-        </div>
-
-         <div class="row-fluid user-infos <c:out value="${usuario.id}" />">
-            <div class="span10 offset1">
+        
+            <div class="span10 offset0">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">Datos Sanitarios</h3>
@@ -273,30 +317,27 @@
                                     <tbody>
                                     <tr>
                                         <td><strong>Nº Seguridad social</strong></td>
-                                        <td>123456</td>
+                                        <td><c:out value="${usuario.numSegSocial}" /></td>
                                     </tr>
     
                                     <tr>
                                         <td><strong>Grupo Sanguíneo</strong></td>
-                                        <td>A Positivo</td>
+                                        <td><c:out value="${usuario.grupoSanguineo}" /></td>
                                     </tr>
 
                                       <tr>
                                         <td><strong>Operaciones</strong></td>
-                                        <td>Ninguna</td>
+                                        <td><c:out value="${usuario.operaciones}" /></td>
 
-                                         <td><strong>Enfermedades pasadas</strong></td>
-                                        <td>Pulmonía</td>
-                                    </tr>
-                                    
+                                    </tr>              
                                     <tr>
-                                        
-                                       
-
-                                        <td><strong>Enfermedades</strong></td>
-                                        <td>Diabetes</td>
-                                     </tr>
+                                    <td><strong>Enfermedades pasadas</strong></td>
+                                    <td><c:out value="${usuario.enfermPasadas}" /></td>
                                      
+                                     <tr>
+                                     <td><strong>Enfermedades</strong></td>
+                                        <td><c:out value="${usuario.enfermActuales}" /></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -305,7 +346,7 @@
                     
                 </div>
             </div>
-        </div>
+       </div>
          </c:forEach>
 	</div>
 </div>

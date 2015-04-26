@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+
+import es.upm.dit.isst.tacc.model.Alerta;
 import es.upm.dit.isst.tacc.model.Usuario;
 import es.upm.dit.isst.tacc.dao.TaccDAO;
 import es.upm.dit.isst.tacc.dao.TaccDAOImpl;
@@ -29,9 +34,27 @@ public class UsuariosServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		usuarios = dao.listUsuarios();
+		List<Alerta> alertas = new ArrayList<Alerta>();
+		alertas = dao.listAlertas();
+		req.getSession().setAttribute("alertas", new ArrayList<Alerta>(alertas));
+		
 		req.getSession().setAttribute("usuarios", new ArrayList<Usuario>(usuarios));
-
-		RequestDispatcher view = req.getRequestDispatcher("TaccUsuarios.jsp");
-		view.forward(req, resp);
+		
+		UserService userService = UserServiceFactory.getUserService();
+		String url = userService.createLogoutURL(req.getRequestURI());
+		User user = userService.getCurrentUser();
+		req.getSession().setAttribute("user", user);
+		
+		if (user == null){
+			url = "/index";
+			req.getSession().setAttribute("url", url);
+			RequestDispatcher view = req.getRequestDispatcher("TaccApplication.jsp"); 
+			view.forward(req, resp);
+		}else{
+			req.getSession().setAttribute("url", url);
+			RequestDispatcher view = req.getRequestDispatcher("TaccUsuarios.jsp");
+			view.forward(req, resp);
+		}
+		
 	}
 }

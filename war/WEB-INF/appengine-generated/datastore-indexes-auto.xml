@@ -1,4 +1,11 @@
-<!-- Indices written at Sun, 29 Mar 2015 20:39:40 CEST -->
+<!-- Indices written at Sun, 26 Apr 2015 23:32:01 CEST -->
 
-<datastore-indexes/>
+<datastore-indexes>
 
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Evento" ancestor="false" source="auto">
+        <property name="userId" direction="asc"/>
+        <property name="fecha" direction="desc"/>
+    </datastore-index>
+
+</datastore-indexes>

@@ -27,11 +27,15 @@ public class HistorialServlet extends HttpServlet {
 		
 		TaccDAO dao = TaccDAOImpl.getInstance();
 		List<Evento> eventos = new ArrayList<Evento>();
-		
+		List<Alerta> alertas = new ArrayList<Alerta>();
+		alertas = dao.listAlertas();
+		req.getSession().setAttribute("alertas", new ArrayList<Alerta>(alertas));
 	
 		eventos = dao.listEventos(userId);
+		int usuario = userId;
 
 		req.getSession().setAttribute("eventos", new ArrayList<Evento>(eventos));
+		req.getSession().setAttribute("usuario", usuario);
 
 		RequestDispatcher view = req.getRequestDispatcher("TaccHistorial.jsp");
 		view.forward(req, resp);

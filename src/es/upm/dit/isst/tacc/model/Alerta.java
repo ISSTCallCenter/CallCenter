@@ -15,12 +15,22 @@ public class Alerta implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private int userId;
+	private int idEvento;
 	private String tipo;
-	private String subtipo;
+	private double latitud;
+	private double longitud;
 	
-	public Alerta(String tipo, String subtipo){
-		this.setTipo(tipo);
-		this.setSubtipo(subtipo);
+	public Alerta(int userId, String tipo, int idEvento, double latitud,double longitud){
+
+		this.tipo = tipo;
+		this.userId = userId;
+		this.idEvento = idEvento;
+		this.latitud = latitud;
+		this.longitud = longitud;
+		
+		
+		
 	}
 
 	public Long getId() {
@@ -34,14 +44,42 @@ public class Alerta implements Serializable{
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-
-	public String getSubtipo() {
-		return subtipo;
+	
+	public int getUserId() {
+		return userId;
+	}
+	
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	
+	public int getIdEvento() {
+		return idEvento;
+	}
+	
+	public void setIdEvento(int idEvento) {
+		this.idEvento = idEvento;
+	}
+	
+	public double getLatitud() {
+		return latitud;
+	}
+	
+	public void setLatitud(double latitud) {
+		this.latitud = latitud;
+	}
+	
+	public double getLongitud() {
+		return longitud;
+	}
+	
+	public void setLongitud(double longitud) {
+		this.longitud = longitud;
 	}
 
-	public void setSubtipo(String subtipo) {
-		this.subtipo = subtipo;
-	}
+
+
+
 
 
 }

@@ -9,9 +9,9 @@ import javax.persistence.Query;
 
 
 
-import es.upm.dit.isst.tacc.model.Alerta;
-import es.upm.dit.isst.tacc.model.Evento;
-import es.upm.dit.isst.tacc.model.Usuario;
+
+import es.upm.dit.isst.tacc.model.*;
+
 
 
 
@@ -32,13 +32,13 @@ public class TaccDAOImpl implements TaccDAO {
 		// TODO Auto-generated method stub
 		EntityManager em = EMFService.get().createEntityManager();
 		// read the existing entries
-		Query q = em.createQuery("select m from Usuario m");
+		Query q = em.createQuery("select m from Usuario m order by userId");
 		List<Usuario> usuarios = q.getResultList();
 		return usuarios;
 	}
 
 	@Override
-	public void addUsuario(int userId, String nombre, String primerApellido, String segundoApellido,
+	public void addUsuario(int userId, double latitud, double longitud, String nombre, String primerApellido, String segundoApellido,
 			String sexo, String fecha, String DNI, String telefono, String via, String numeroEdificio,
 			String provincia, String ciudad, String CP, String estadoCivil, String personaContacto1,
 			String telefonoContacto1, String personaContacto2, String telefonoContacto2, String numSegSocial,
@@ -46,7 +46,7 @@ public class TaccDAOImpl implements TaccDAO {
 		// TODO Auto-generated method stub
 		synchronized (this) {
 			EntityManager em = EMFService.get().createEntityManager();
-			Usuario usuario = new Usuario(userId, nombre, primerApellido, segundoApellido,
+			Usuario usuario = new Usuario(userId, latitud, longitud, nombre, primerApellido, segundoApellido,
 					sexo, fecha, DNI, telefono, via, numeroEdificio,
 					provincia, ciudad, CP, estadoCivil, personaContacto1,
 					telefonoContacto1, personaContacto2, telefonoContacto2, numSegSocial,
@@ -83,6 +83,12 @@ public class TaccDAOImpl implements TaccDAO {
 		EntityManager em = EMFService.get().createEntityManager();
 		Query q = em.createQuery("DELETE FROM Usuario m");
 		q.executeUpdate();
+		Query q1 = em.createQuery("DELETE FROM Alerta a");
+		q1.executeUpdate();
+		Query q2 = em.createQuery("DELETE FROM Evento e");
+		q2.executeUpdate();
+		Query q3 = em.createQuery("DELETE FROM Chat c");
+		q3.executeUpdate();
 	}
 
 	@Override
@@ -97,16 +103,16 @@ public class TaccDAOImpl implements TaccDAO {
 	public List<Alerta> listAlertas(){
 		EntityManager em = EMFService.get().createEntityManager();
 		// read the existing entries
-		Query q = em.createQuery("select a from Alerta a");
+		Query q = em.createQuery("select a from Alerta a order by tipo");
 		List<Alerta> alertas = q.getResultList();
 		return alertas;
 	}
 	
 	@Override
-	public void addAlerta(String tipo, String subtipo){
+	public void addAlerta(int userId, String tipo, int idEvento, double latitud,double longitud){
 		synchronized (this) {
 			EntityManager em = EMFService.get().createEntityManager();
-			Alerta alerta = new Alerta(tipo, subtipo);
+			Alerta alerta = new Alerta(userId, tipo, idEvento, latitud, longitud);
 			em.persist(alerta);
 			em.close();
 		}
@@ -128,25 +134,23 @@ public class TaccDAOImpl implements TaccDAO {
 	public List<Evento> listEventos(int userId) {
 		EntityManager em = EMFService.get().createEntityManager();
 		// read the existing entries
-		Query q = em.createQuery("select e from Evento e where e.userId =:userId");
+		Query q = em.createQuery("select e from Evento e where e.userId =:userId order by fecha DESC");
 		q.setParameter("userId", userId);
 		List<Evento> eventos = q.getResultList();
 		return eventos;
 	}
 
 	@Override
-	public void addEvento(int userId, String fecha, int ritmoCardiaco, int IMC,
-			int tensionArterial, int nivelGlucosa, boolean acelerometro,
-			double latitud, double longitud, boolean incrGas,
-			boolean incrHumedad, boolean incrTemperatura, int nivelTemperatura,
-			int nivelHumedad, int nivelCO2) {
+	public void addEvento(int userId, String fecha, int ritmoCardiaco, 
+			int tensionArterialMax,  int tensionArterialMin, int nivelGlucosa, boolean acelerometro,
+			double latitud, double longitud, boolean incrGas, boolean incrTemperatura, 
+			int nivelTemperatura, int nivelCO2, int idEvento) {
 		
 		synchronized (this) {
 			EntityManager em = EMFService.get().createEntityManager();
-			Evento evento = new Evento(userId, fecha, ritmoCardiaco, IMC,
-			tensionArterial, nivelGlucosa, acelerometro,
-			latitud, longitud, incrGas, incrHumedad, incrTemperatura, nivelTemperatura,
-			nivelHumedad, nivelCO2);
+			Evento evento = new Evento(userId, fecha, ritmoCardiaco, 
+			tensionArterialMax, tensionArterialMin, nivelGlucosa, acelerometro,
+			latitud, longitud, incrGas, incrTemperatura, nivelTemperatura, nivelCO2, idEvento);
 			em.persist(evento);
 			em.close();
 		}
@@ -156,6 +160,39 @@ public class TaccDAOImpl implements TaccDAO {
 	@Override
 	public void removeEvento(long id) {
 		
+	}
+	
+	@Override
+	public void addMensaje(String mensaje, String id, long tiempo, String fecha){
+		synchronized (this) {
+			EntityManager em = EMFService.get().createEntityManager();
+			Chat chat = new Chat(mensaje, id, tiempo,fecha);
+			em.persist(chat);
+			em.close();
+		}
+		
+	}
+	
+
+	
+	@Override
+	public void removeChat(long id){
+		EntityManager em = EMFService.get().createEntityManager();
+		try {
+			Chat chat = em.find(Chat.class, id);
+			em.remove(chat);
+		} finally {
+			em.close();
+		}
+	}
+
+	@Override
+	public List<Chat> listChats() {
+		EntityManager em = EMFService.get().createEntityManager();
+		// read the existing entries
+		Query q = em.createQuery("select a from Chat a order by tiempo DESC");
+		List<Chat> chats = q.getResultList();
+		return chats;
 	}
 
 }

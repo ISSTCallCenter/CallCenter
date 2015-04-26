@@ -29,8 +29,7 @@ public class IndexServlet extends HttpServlet {
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		String url = userService.createLoginURL(req.getRequestURI());
-		String urlLinktext = "Login";
-		List<Usuario> usuarios = new ArrayList<Usuario>();
+
 		
 		if (user != null){
 			 url = "/inicio";

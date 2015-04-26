@@ -9,12 +9,22 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title> Call Center </title>
-<script type="text/javascript" src="script.js"></script>
 
+<title> Call Center </title>
+<script type="text/javascript" src="script.js">
+//&& user.nickname=='test@example.com'
+</script>
+
+<style type="text/css">
+body{
+
+	background: url(medicina.jpg) no-repeat fixed center; 
+
+}
+</style>
 <!-- hoja de estilo -->
 
-      <link rel="stylesheet" type="text/css" href="hoja-estilo.css" media="screen" />
+      <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
 
 <!-- favicon -->
 
@@ -37,6 +47,7 @@
             </div>
         </div> 
 </div>
+
 </c:if>
 
 <c:if test="${user != null}">
@@ -45,6 +56,9 @@
             <div id="output"></div>
             <div class="avatar"></div>
             <div class="form-box">
+            		<c:if test="${user != null}">
+            		Usuario <c:out value="${user.nickname}"/>
+            		</c:if>
             	<a href="<c:url value="${url}"/>">
             	<button class="btn btn-info btn-block login" >Entrar en la web</button></a>
             </div>

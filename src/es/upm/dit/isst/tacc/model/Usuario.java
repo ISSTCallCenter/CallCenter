@@ -16,6 +16,8 @@ public class Usuario implements Serializable{
 	
 	//Datos Principales
 	private int userId;
+	private double latitud;
+	private double longitud;
 	private String nombre;
 	private String primerApellido;
 	private String segundoApellido;
@@ -44,13 +46,15 @@ public class Usuario implements Serializable{
 	private String enfermActuales;
 	
 
-	public Usuario(int userId, String nombre, String primerApellido, String segundoApellido,
+	public Usuario(int userId, double latitud, double longitud, String nombre, String primerApellido, String segundoApellido,
 			String sexo, String fecha, String DNI, String telefono, String via, String numeroEdificio,
 			String provincia, String ciudad, String CP, String estadoCivil, String personaContacto1,
 			String telefonoContacto1, String personaContacto2, String telefonoContacto2, String numSegSocial,
 			String grupoSanguineo, String operaciones, String enfermPasadas, String enfermActuales) {
 		
 		this.setUserId(userId);
+		this.setLatitud(latitud);
+		this.setLongitud(longitud);
 		this.setNombre(nombre);
 		this.setPrimerApellido(primerApellido);
 		this.setSegundoApellido(segundoApellido);
@@ -88,6 +92,22 @@ public class Usuario implements Serializable{
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public double getLatitud() {
+		return latitud;
+	}
+
+	public void setLatitud(double latitud) {
+		this.latitud = latitud;
+	}
+
+	public double getLongitud() {
+		return longitud;
+	}
+
+	public void setLongitud(double longitud) {
+		this.longitud = longitud;
 	}
 
 	public String getNombre() {

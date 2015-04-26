@@ -8,10 +8,12 @@
 <html>
 <head>
     <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="hoja-estilo.css" media="screen" />
     <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
     <title>Dropdown userlist plus administration (V2.3) - Bootsnipp.com</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+      	
     <style type="text/css">
         //Reusing bootstrap 3 panel CSS
 .panel {
@@ -109,6 +111,30 @@
     </style>
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+    
+    <script type="text/javascript">
+
+		//setInterval(ajaxAutoload, 3000); //300000 MS == 5 minutes
+   		
+		function ajaxAutoload() {
+    	//do your AJAX stuff here
+    	var historialid = document.getElementById("usuariop").textContent;
+		$('#autoload').load('/historial?userId=' + historialid + ' #autoload').fadeIn("slow");
+		}
+	</script>
+	<script>
+    setInterval(ajaxAutoload2, 10000); //300000 MS == 5 minutes
+        
+   	
+   		
+		function ajaxAutoload2() {
+    	//do your AJAX stuff here
+			$('#load_me').load('/alertallega #load_me').fadeIn("slow");
+    		
+		}
+	</script>
 </head>
 <body>
 
@@ -126,61 +152,97 @@
         </div>
  </nav>
  <br><br>
-
-<div class="datagrid">
-    <table>
-<thead>
-
-    <tr>
-        <th>Id Usuario</th>
-        <th>Fecha</th>
-        <th>Ritmo Cardíaco</th>
-        <th>IMC</th>
-        <th>Tensión arterial</th>
-        <th>Nivel glucosa</th>
-        <th>Acelerómetro</th>
-        <th>Latitud</th>
-        <th>Longitud</th>
-        <th>Incremento gas</th>
-        <th>Incremento humedad</th>
-        <th>Incremento temperatura</th>
-        <th>Nivel temperatura</th>
-        <th>Nivel humedad</th>
-        <th>Nivel CO</th>
-    </tr>
-</thead>
-
-<tfoot>
-</tfoot>
-<tbody>
-
-<c:forEach items="${eventos}" var="evento">
-    <tr>
-      <td><c:out value="${evento.userId}" /></td>
-	  <td><c:out value="${evento.fecha}" /></td>
-      <td><c:out value="${evento.ritmoCardiaco}" /></td>
-      <td><c:out value="${evento.IMC}" /></td>
-      <td><c:out value="${evento.tensionArterial}" /></td>
-      <td><c:out value="${evento.nivelGlucosa}" /></td>
-      <td><c:out value="${evento.acelerometro}" /></td>
-       <td><c:out value="${evento.latitud}" /></td>
-       <td><c:out value="${evento.longitud}" /></td>
-       <td><c:out value="${evento.incrGas}" /></td>
-       <td><c:out value="${evento.incrHumedad}" /></td>
-       <td><c:out value="${evento.incrTemperatura}" /></td>
-       <td><c:out value="${evento.nivelTemperatura}" /></td>
-       <td><c:out value="${evento.nivelHumedad}" /></td>
-       <td><c:out value="${evento.nivelCO2}" /></td>
-    </tr>
-</c:forEach>
-</tbody>
-</table></div>
-
-
-
-
-
+ <div style="display:none">
+ <p id="usuariop"><c:out value="${usuario}" /></p>
+ </div>
+ <div id="load_me" style="position:fixed;right:1%">
+				    
+				    <p style="text-align:center"> ALERTAS POR ATENDER: ${fn:length(alertas)}</p>
+				    <button class="btn btn-danger" onClick=actualizarAlarmas()>Actualizar alarmas</button> 
+				   
 </div>
+<div id="autoload">
+<div class="bs-example" data-example-id="table-within-panel">
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+	
+      <!-- Table -->
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+          	<th>Alarma Asociada</th>
+	        <th>Id Usuario</th>
+	        <th>Fecha</th>
+	        <th>Ritmo Cardíaco</th>
+        	<th>Tension arterial Max</th>
+        	<th>Tensión arterial Min</th>
+	        <th>Nivel glucosa</th>
+	        <th>Acelerómetro</th>
+	        <th>Latitud</th>
+	        <th>Longitud</th>
+	        <th>Incremento gas</th>
+	        <th>Incremento temperatura</th>
+	        <th>Nivel temperatura</th>
+	        <th>Nivel CO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <c:forEach items="${eventos}" var="evento">
+          
+          <c:forEach items="${alertas}" var="alerta">
+		  <c:choose>
+			<c:when test="${alerta.idEvento == evento.idEvento}">
+			 <tr>
+			 <td style="background-color:orange">Sí</td>
+		      <td style="background-color:orange"><c:out value="${evento.userId}" /></td>
+			  <td style="background-color:orange"><c:out value="${evento.fecha}" /></td>
+		      <td style="background-color:orange"><c:out value="${evento.ritmoCardiaco}" /></td>
+		      <td style="background-color:orange"><c:out value="${evento.tensionArterialMax}" /></td>
+		      <td style="background-color:orange"><c:out value="${evento.tensionArterialMin}" /></td>
+		      <td style="background-color:orange"><c:out value="${evento.nivelGlucosa}" /></td>
+		      <td style="background-color:orange"><c:out value="${evento.acelerometro}" /></td>
+		       <td style="background-color:orange"><c:out value="${evento.latitud}" /></td>
+		       <td style="background-color:orange"><c:out value="${evento.longitud}" /></td>
+		       <td style="background-color:orange"><c:out value="${evento.incrGas}" /></td>
+		       <td style="background-color:orange"><c:out value="${evento.incrTemperatura}" /></td>
+		       <td style="background-color:orange"><c:out value="${evento.nivelTemperatura}" /></td>
+		       <td style="background-color:orange"><c:out value="${evento.nivelCO2}" /></td>
+   			 </tr>						                              
+			</c:when>
+			<c:otherwise>
+			 <tr>
+			 <td>No</td>
+		      <td><c:out value="${evento.userId}" /></td>
+			  <td><c:out value="${evento.fecha}" /></td>
+		      <td><c:out value="${evento.ritmoCardiaco}" /></td>
+		      <td><c:out value="${evento.tensionArterialMax}" /></td>
+		      <td><c:out value="${evento.tensionArterialMin}" /></td>
+		      <td><c:out value="${evento.nivelGlucosa}" /></td>
+		      <td><c:out value="${evento.acelerometro}" /></td>
+		       <td><c:out value="${evento.latitud}" /></td>
+		       <td><c:out value="${evento.longitud}" /></td>
+		       <td><c:out value="${evento.incrGas}" /></td>
+		       <td><c:out value="${evento.incrTemperatura}" /></td>
+		       <td><c:out value="${evento.nivelTemperatura}" /></td>
+		       <td><c:out value="${evento.nivelCO2}" /></td>
+    		</tr>
+			</c:otherwise>
+		</c:choose>
+		</c:forEach>
+          
+          
+          
+   
+</c:forEach>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+ 
+</div>
+</div>
+
 
 
 <script type="text/javascript">

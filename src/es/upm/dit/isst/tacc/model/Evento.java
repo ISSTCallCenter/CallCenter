@@ -15,40 +15,41 @@ public class Evento implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private int userId;
-	private String fecha;
-	private int ritmoCardiaco;
-	private int IMC;
-	private int tensionArterial;
-	private int nivelGlucosa;
-	private boolean acelerometro;
-	private double latitud;
-	private double longitud;
-	private boolean incrGas;
-	private boolean incrHumedad;
-	private boolean incrTemperatura;
-	private int nivelTemperatura;
-	private int nivelHumedad;
-	private int nivelCO2;
+	private int userId;					//1
+	private String fecha;			
+	private int ritmoCardiaco;			//2
+	private int tensionArterialMax;		//3
+	private int tensionArterialMin;		//4
+	private int nivelGlucosa;			//5	
+	private boolean acelerometro;		//6
+	private double latitud;				//7
+	private double longitud;			//8
+	private boolean incrGas;			//9
+	private boolean incrTemperatura;	//10
+	private int nivelTemperatura;		//11
+	private int nivelCO2;				//12
+	private int idEvento;				//13
 	
-	public Evento(int userId, String fecha, int ritmoCardiaco, int IMC, int tensionArterial, int nivelGlucosa,
-	boolean acelerometro, double latitud, double longitud, boolean incrGas, boolean incrHumedad, boolean incrTemperatura,
-	int nivelTemperatura, int nivelHumedad, int nivelCO2){
+	public Evento(int userId, String fecha, int ritmoCardiaco,  int tensionArterialMax,  int tensionArterialMin, int nivelGlucosa,
+	boolean acelerometro, double latitud, double longitud, boolean incrGas, boolean incrTemperatura,
+	int nivelTemperatura, int nivelCO2, int idEvento){
 		this.setUserId(userId);
 		this.setAcelerometro(acelerometro);
 		this.setFecha(fecha);
-		this.setIMC(IMC);
+		
 		this.setIncrGas(incrGas);
-		this.setIncrHumedad(incrHumedad);
+
 		this.setIncrTemperatura(incrTemperatura);
 		this.setLatitud(latitud);
 		this.setLongitud(longitud);
 		this.setNivelCO2(nivelCO2);
 		this.setNivelGlucosa(nivelGlucosa);
-		this.setNivelHumedad(nivelHumedad);
+		
 		this.setNivelTemperatura(nivelTemperatura);
 		this.setRitmoCardiaco(ritmoCardiaco);
-		this.setTensionArterial(tensionArterial);
+		this.setTensionArterialMax(tensionArterialMax);
+		this.setTensionArterialMin(tensionArterialMin);
+		this.setIdEvento(idEvento);
 	}
 	
 	public Long getId() {
@@ -78,22 +79,23 @@ public class Evento implements Serializable{
 		this.ritmoCardiaco = ritmoCardiaco;
 	}
 
-	public int getIMC() {
-		return IMC;
+	
+
+	public int getTensionArterialMax() {
+		return tensionArterialMax;
 	}
 
-	public void setIMC(int iMC) {
-		IMC = iMC;
+	public void setTensionArterialMax(int tensionArterialMax) {
+		this.tensionArterialMax = tensionArterialMax;
 	}
 
-	public int getTensionArterial() {
-		return tensionArterial;
+	public int getTensionArterialMin() {
+		return tensionArterialMin;
 	}
 
-	public void setTensionArterial(int tensionArterial) {
-		this.tensionArterial = tensionArterial;
+	public void setTensionArterialMin(int tensionArterialMin) {
+		this.tensionArterialMin = tensionArterialMin;
 	}
-
 	public int getNivelGlucosa() {
 		return nivelGlucosa;
 	}
@@ -134,13 +136,6 @@ public class Evento implements Serializable{
 		this.incrGas = incrGas;
 	}
 
-	public boolean isIncrHumedad() {
-		return incrHumedad;
-	}
-
-	public void setIncrHumedad(boolean incrHumedad) {
-		this.incrHumedad = incrHumedad;
-	}
 
 	public boolean isIncrTemperatura() {
 		return incrTemperatura;
@@ -158,13 +153,6 @@ public class Evento implements Serializable{
 		this.nivelTemperatura = nivelTemperatura;
 	}
 
-	public int getNivelHumedad() {
-		return nivelHumedad;
-	}
-
-	public void setNivelHumedad(int nivelHumedad) {
-		this.nivelHumedad = nivelHumedad;
-	}
 
 	public int getNivelCO2() {
 		return nivelCO2;
@@ -173,5 +161,14 @@ public class Evento implements Serializable{
 	public void setNivelCO2(int nivelCO2) {
 		this.nivelCO2 = nivelCO2;
 	}
+	
+	public int getIdEvento() {
+		return idEvento;
+	}
+
+	public void setIdEvento(int idEvento) {
+		this.idEvento = idEvento;
+	}
+	
 	
 }

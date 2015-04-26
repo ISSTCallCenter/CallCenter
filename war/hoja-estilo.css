@@ -1,6 +1,6 @@
 body{
 
-	background: url(medicina.jpg) no-repeat fixed center; 
+	background-image: url(fondo.png);
 
 }
 html,body{
@@ -139,3 +139,83 @@ html,body{
   -webkit-animation-name: fadeInUp;
   animation-name: fadeInUp;
 }
+
+
+
+		nav 
+{
+	background-color:white;                                                                                    
+
+}
+	.navega	nav 
+{
+	width:500px;                                                                                    
+	float:right;
+	padding:5px 0px;
+	background: #FFF;
+	margin:5px;
+	margin-top: 22px;
+	margin-right: 0px;
+    right: 0.2%;
+    position: fixed;
+}
+
+#cuerpo {
+	width:1400px; 
+	
+}
+
+
+.navega	nav li 
+{ 
+		margin: 4px 10px;
+		
+}
+
+.navega	nav ul
+{
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+		font-weight: bold;
+}
+
+.navega	nav li a  
+{
+		display: block;
+		color: black;
+	        background-color:#F2B252;
+		width: 140px;
+		height: 25px;
+		line-height:25px;
+		border:2px solid #000; 
+		border-radius: 25px;
+		text-decoration: none;
+		text-align: center;
+		
+		
+}
+		
+      html, #map-canvas {
+        height: 250px;
+        width: 1500px;
+        margin: 0px;
+        padding: 0px
+        
+      }
+       .ordenar {
+       
+        display: inline-block;
+        width: 400px;
+        margin: 5px 8px;
+        
+      }
+      
+     
+      
+      table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+

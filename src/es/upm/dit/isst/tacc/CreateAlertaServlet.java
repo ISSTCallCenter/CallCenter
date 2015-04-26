@@ -32,27 +32,48 @@ private static final long serialVersionUID = 1L;
 	System.out.println("Creando nueva alerta");
 	
 	RequestDispatcher view = req.getRequestDispatcher("TaccInicio.jsp");
-	//resp.setHeader("REFRESH", "5");
-	//resp.sendRedirect("/inicio");
+	RequestDispatcher v = req.getRequestDispatcher("TaccHistorial.jsp");
+
 	view.forward(req, resp);
+	v.forward(req, resp);
 
 
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
 		
-		JID recipientJID = new JID("mph-isst-2015@appspot.com");
+		String areaMSG = checkNull(req.getParameter("description"));
+		
+		java.util.Date date = new java.util.Date();
+		java.text.SimpleDateFormat sdf=new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		
+		String fecha = sdf.format(date);
+		
+		JID chat = new JID("tacc-isst-2015@appspot.com");
+		JID recipientJID = new JID("cuidadores-isst-2015@appspot.com");
+		
 		  Message response = new MessageBuilder()
-		      .withMessageType(MessageType.NORMAL)
+		      .withMessageType(MessageType.CHAT)
 		      .withRecipientJids(recipientJID)
-		      .withBody("hola")
+		      .withFromJid(chat)
+		      .withBody(areaMSG)
 		      .build();
 
 		  //Send the message
 		  boolean messageSent = false;
 		  SendResponse status = xmppService.sendMessage(response);
 		  messageSent = (status.getStatusMap().get(recipientJID) == SendResponse.Status.SUCCESS);
-		  resp.sendRedirect("/inicio");
+		  
+			TaccDAO dao = TaccDAOImpl.getInstance();
+			dao.addMensaje(areaMSG, "Yo :", date.getTime(), fecha);
+		  
+		  resp.sendRedirect("/chat");
 		
 		}
+	private String checkNull(String s) {
+		if (s == null) {
+			return "";
+		}
+		return s;
 	}
+}
